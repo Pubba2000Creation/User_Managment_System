@@ -7,7 +7,9 @@ const customercontroller = require('../controllers/customercontroller');
  */
 
 router.get('/',customercontroller.homepage);
+
 router.get('/add',customercontroller.addcustomer);
+router.post('/add',customercontroller.postcustomer);
 
 
 
