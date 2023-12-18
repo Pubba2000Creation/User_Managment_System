@@ -4,7 +4,15 @@ const express = require('express');
 const expressLayout = require('express-ejs-layouts');
 
 
+const session =require('express-session');
+const flash = require('connect-flash');
+
+
+
+
 const connectDB = require('./server/config/db');
+const req = require('express/lib/request');
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +27,22 @@ app.use(express.json());
 // Static Files
 app.use(express.static('public'));
 
+// express session
+app.use(
+  session(
+    {
+      secret:'secret',
+      resave:false,
+      saveUninitialized:true,
+      cookie:{
+        maxAge:1000*60*60*24*7, // one week
+      }
+    }
+  )
+);
+
+// connect-flash
+app.use(flash());
 
 // Templating Engine
 app.use(expressLayout);

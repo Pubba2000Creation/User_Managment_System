@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
  */ 
 exports.homepage = async(req,res) =>{
 
+    const messages = await req.flash('info');
+
         // Home
     
 
@@ -15,7 +17,7 @@ exports.homepage = async(req,res) =>{
             title:'nodeJs',
             description:'Free Nodejs User Managment system'
         }
-        res.render('index',locals);
+        res.render('index',{ locals, messages });
     
 }
 
@@ -67,7 +69,8 @@ exports.postcustomer = async(req,res) =>{
 
     try {
 
-        await custmoer.create(newcustomer)
+        await custmoer.create(newcustomer);
+        await req.flash('info','New Customer has been added.');
 
         res.redirect('/');
    
