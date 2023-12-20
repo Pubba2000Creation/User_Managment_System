@@ -1,3 +1,4 @@
+const customer = require('../models/customer');
 const custmoer = require('../models/customer');
 const mongoose = require('mongoose');
 
@@ -6,20 +7,78 @@ const mongoose = require('mongoose');
  *  GET /
  * homepage 
  */ 
+
+// //////////////////////// set num 1 : add boostrap pagination to the web page //////////////////////////////////
 exports.homepage = async(req,res) =>{
 
     const messages = await req.flash('info');
-
         // Home
-    
-
-        const locals ={
+          const locals ={
             title:'nodeJs',
-            description:'Free Nodejs User Managment system'
+            description:'MERN stack User Managment system'
         }
-        res.render('index',{ locals, messages });
-    
+
+        let parPage =12;
+        let page = req.query.page || 1;
+
+
+        try {
+            
+            const customers = await custmoer.aggregate([{ $sort: {updateAt: -1}}])
+                .skip(parPage* page - parPage)
+                .limit(parPage)
+                .exec();
+            const count = await custmoer.countDocuments();
+            
+            res.render('index',{
+                locals,
+                customers,
+                current:page,
+                pages:Math.ceil(count/parPage),
+                messages
+            });
+
+        } catch (error) {
+            console.log(error);
+           }
+
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //////////////////////// set num 2 : without boostrap pagination to the web page //////////////////////////////////
+
+
+
+// exports.homepage = async(req,res) =>{
+
+//     const messages = await req.flash('info');
+//         // Home
+//           const locals ={
+//             title:'nodeJs',
+//             description:'Free Nodejs User Managment system'
+//         }
+//         try {
+//             const customers = await custmoer.find({}).limit(22);
+//             res.render('index',{ locals, messages, customers});
+//         } catch (error) {
+//             console.log(error);
+//            }
+
+  
+// }
 
 /**
  *  GET /
