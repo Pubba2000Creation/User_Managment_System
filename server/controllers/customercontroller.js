@@ -1,5 +1,5 @@
 const customer = require('../models/customer');
-const custmoer = require('../models/customer');
+
 const mongoose = require('mongoose');
 
 
@@ -18,25 +18,27 @@ exports.homepage = async(req,res) =>{
             description:'MERN stack User Managment system'
         }
 
-        let parPage =12;
+        let perPage =10;
         let page = req.query.page || 1;
 
 
         try {
             
-            const customers = await custmoer.aggregate([{ $sort: {updateAt: -1}}])
-                .skip(parPage* page - parPage)
-                .limit(parPage)
+            const customers = await customer.aggregate([{ $sort: { updateAt: -1 } }])
+                .skip(perPage * page - perPage)
+                .limit(perPage)
                 .exec();
-            const count = await custmoer.countDocuments();
+
+                const count = await customer.countDocuments();
+
             
-            res.render('index',{
-                locals,
-                customers,
-                current:page,
-                pages:Math.ceil(count/parPage),
-                messages
-            });
+             res.render('index', {
+                    locals,
+                    customers,
+                    current: page,
+                    pages: Math.ceil(count / perPage),
+                    messages,
+                });
 
         } catch (error) {
             console.log(error);
@@ -110,7 +112,7 @@ exports.postcustomer = async(req,res) =>{
 
     console.log(req.body); 
 
-    const newcustomer = new custmoer({
+    const newcustomer = new customer({
         firstName: req.body.firstName,
         lastName:req.body.lastName,
     
@@ -128,7 +130,7 @@ exports.postcustomer = async(req,res) =>{
 
     try {
 
-        await custmoer.create(newcustomer);
+        await customer.create(newcustomer);
         await req.flash('info','New Customer has been added.');
 
         res.redirect('/');
@@ -142,3 +144,26 @@ exports.postcustomer = async(req,res) =>{
  
 }
 
+
+/**
+ *  GET /
+ * customer data
+ */
+
+exports.view = async (req, res) => {
+  try {
+    const foundcustomer = await customer.findOne({ _id: req.params.id });
+
+    const locals = {
+      title: "View Customer Data",
+      description: "Free NodeJs User Management System",
+    };
+
+    res.render("customer/view", {
+      locals,
+      foundcustomer,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

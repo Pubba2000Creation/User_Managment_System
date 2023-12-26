@@ -40,7 +40,7 @@
 
           <div class="d-flex flex-row justify-content-end gap-2">
 
-            <a href="/views/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+            <a href="/view/<%= element._id %>" type="button" class="btn btn-primary btn-small">
               <i class="bi bi-eye"></i>
                      
             </a>
@@ -70,19 +70,47 @@
 
 </div>
 
-<%# this is adding pagination to web page %>
+<%# this is adding pagination to web page  %>
 <% if (customers.length > 0) { %>
   <nav aria-label="Dashboard pagination">
     <ul class="pagination justify-content-center mt-5">
 
       <% if (current == 1) { %>
-       <%# lasst edith here...............................///   %>
+        <li class="page-item disabled"><a href="#" class="page-link">First</a></li>
+      <% } else { %>
+        <li class="page-item"><a href="/?page=1" class="page-link">First</a></li>
+      <% } %>
 
+      
+      <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+      <% if(i !== 1) { %>
+        <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+      <% } %>
+
+      <%# next part the loop to get data  %>
+      
+      <% for(; i <= (Number(current) + 4) && i <= pages; i++ ) { %>
+        <% if (i == current) { %>
+          <li class="page-item disabled"><a href="#" class="page-link"><%= i %></a></li>
+        <% } else { %>
+          <li class="page-item"><a href="/?page=<%= i %>" class="page-link"><%= i %></a></li>
+        <% } %>
+        <% if (i == Number(current) + 4 && i < pages) { %>
+          <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+        <% } %>
+      <% } %>
+
+      <% if (current == pages) { %>
+        <li class="page-item disabled"><a href="#" class="page-link">Last</a></li>
+      <% } else { %>
+        <li class="page-item"><a href="/?page=<%= pages %>" class="page-link">Last</a></li>
       <% } %>
 
 
     </ul>
   </nav>
- 
 <% } %>
- 
+
+<%# this is the end of page pagination part :- to apply to another page just copy and past it to   current way %>
+
+

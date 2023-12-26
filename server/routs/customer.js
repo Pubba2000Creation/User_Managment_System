@@ -1,17 +1,19 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
 const customercontroller = require('../controllers/customercontroller');
 
 /**
- *  customer routes
+ * Customer Routes
  */
 
-router.get('/',customercontroller.homepage);
+// Homepage
+router.get('/', customercontroller.homepage);
 
-router.get('/add',customercontroller.addcustomer);
-router.post('/add',customercontroller.postcustomer);
+// Add Customer
+router.get('/add', customercontroller.addcustomer);
+router.post('/add', customercontroller.postcustomer);
 
+// View Customer
+router.get('/view/:id', customercontroller.view);
 
-
-
-module.exports =  router;
+module.exports = router;
