@@ -21,6 +21,7 @@ router.get('/view/:id', customercontroller.view);
 router.get('/edit/:id', customercontroller.edit);
 router.put('/edit/:id', customercontroller.editpost);
 
-
+// delete Customer
+router.delete('/edit/:id', customercontroller.deleteCustomer);
 
 module.exports = router;

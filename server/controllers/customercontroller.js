@@ -218,9 +218,32 @@ exports.editpost = async (req, res) => {
       return res.status(404).send('Customer not found');
     }
 
-    res.redirect(`/edit/${req.params.id}`);
+    res.redirect("/");
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
   }
 };
+
+
+/* 
+
+Delete user code starat here
+
+
+*/
+
+
+exports.deleteCustomer = async (req, res) => {
+  try {
+    // Use deleteOne to delete a customer by their ID
+    const deleteCustomer = await customer.deleteOne({ _id: req.params.id });
+    
+    // Redirect to the homepage after deletion
+    res.redirect("/");
+  } catch (error) {
+    // Log any errors that occur during the deletion process
+    console.log(error);
+  }
+};
+
