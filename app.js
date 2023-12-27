@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 
 
 const session =require('express-session');
@@ -22,6 +23,10 @@ connectDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+
+// Use method-override middleware
+app.use(methodOverride('_method'));
 
 
 // Static Files

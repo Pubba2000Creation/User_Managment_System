@@ -2,3 +2,42 @@ const path = require('path');
 
 // Set the views directory
 app.set('views', path.join(__dirname, 'views'));
+
+project-root/
+|-- controllers/
+|   |-- superAdminController.js
+|   |-- facultyAdminController.js
+|   |-- clubAdminController.js
+|   |-- serviceProviderController.js
+|   |-- productSellerController.js
+|-- models/
+|   |-- User.js
+|   |-- OtherModels.js
+|-- routes/
+|   |-- index.js
+|   |-- superAdminRoutes.js
+|   |-- facultyAdminRoutes.js
+|   |-- clubAdminRoutes.js
+|   |-- serviceProviderRoutes.js
+|   |-- productSellerRoutes.js
+|-- views/
+|   |-- superAdmin/
+|       |-- dashboard.ejs
+|       |-- other-views.ejs
+|   |-- facultyAdmin/
+|       |-- dashboard.ejs
+|       |-- other-views.ejs
+|   |-- clubAdmin/
+|       |-- dashboard.ejs
+|       |-- other-views.ejs
+|   |-- serviceProvider/
+|       |-- dashboard.ejs
+|       |-- other-views.ejs
+|   |-- productSeller/
+|       |-- dashboard.ejs
+|       |-- other-views.ejs
+|-- public/
+|   |-- styles/
+|   |-- scripts/
+|-- app.js
+|-- package.json

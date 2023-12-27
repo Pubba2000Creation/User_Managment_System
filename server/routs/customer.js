@@ -16,4 +16,11 @@ router.post('/add', customercontroller.postcustomer);
 // View Customer
 router.get('/view/:id', customercontroller.view);
 
+
+// edit Customer
+router.get('/edit/:id', customercontroller.edit);
+router.put('/edit/:id', customercontroller.editpost);
+
+
+
 module.exports = router;

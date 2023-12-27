@@ -167,3 +167,60 @@ exports.view = async (req, res) => {
     console.log(error);
   }
 };
+
+/**
+ *  edit /
+ * customer data
+ */
+
+exports.edit = async (req, res) => {
+  try {
+    const foundcustomer = await customer.findOne({ _id: req.params.id });
+
+    const locals = {
+      title: "edit Customer Data",
+      description: "Free NodeJs User Management System",
+    };
+
+    res.render("customer/edit", {
+      locals,
+      foundcustomer,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ *  
+ *  update customer data
+ */
+
+exports.editpost = async (req, res) => {
+  try {
+    console.log('Customer ID:', req.params.id); // Log the customer ID for debugging
+
+    const updatedCustomer = await customer.findByIdAndUpdate(
+      req.params.id,  // Use req.params.id instead of req.params._id
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        tel: req.body.tel,
+        details: req.body.details,
+        email: req.body.email,
+        updateAt:Date.now()
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCustomer) {
+      console.log('Customer not found'); // Log if customer is not found
+      return res.status(404).send('Customer not found');
+    }
+
+    res.redirect(`/edit/${req.params.id}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
