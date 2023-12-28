@@ -1,5 +1,6 @@
 const customer = require('../models/customer');
 
+
 const mongoose = require('mongoose');
 
 
@@ -247,3 +248,33 @@ exports.deleteCustomer = async (req, res) => {
   }
 };
 
+// this for the search of tte user in the system
+exports.searchUser = async (req, res) => {
+  const locals = {
+    title: "Search Customer",
+    description: "NodeJs User Management System",
+  };
+
+  try {
+    let searchTerm = req.body.searchTerm;
+
+    // Remove special characters from the search term
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+
+    // Use regex for case-insensitive search
+    const searchcustomer = await customer.find({
+      $or: [
+        { firstName: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
+        { lastName: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
+      ],
+    });
+
+    res.render("search", {
+      searchcustomer,
+      locals,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};

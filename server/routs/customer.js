@@ -24,4 +24,7 @@ router.put('/edit/:id', customercontroller.editpost);
 // delete Customer
 router.delete('/edit/:id', customercontroller.deleteCustomer);
 
+// search funton
+router.post('/search', customercontroller.searchUser);
+
 module.exports = router;
