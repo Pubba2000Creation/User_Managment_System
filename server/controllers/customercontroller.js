@@ -83,6 +83,39 @@ exports.homepage = async(req,res) =>{
   
 // }
 
+
+
+
+/**
+ *  GET /
+ * about 
+ */
+
+exports.about = async(req,res) =>{
+        // Home
+          const locals ={
+            title:'About',
+            description:'Nodejs User Managment system'
+        }
+        try {
+             
+            res.render('about',{ locals});
+        } catch (error) {
+            console.log(error);
+           }
+
+  
+}
+
+
+
+
+
+
+
+
+
+
 /**
  *  GET /
  * new custmoer form 
